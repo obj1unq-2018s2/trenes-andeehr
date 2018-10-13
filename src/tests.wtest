@@ -1,0 +1,64 @@
+import vagones.*
+import depositos.*
+import trenes.*
+
+describe "tests" {
+	var vagon1 = new VagonDePasajeros(ancho = 2, largo = 10)
+	var vagon2 = new VagonDePasajeros(ancho = 3, largo = 10)
+	var vagon3 = new VagonDeCarga (cargaMaxima = 10000)
+	var locomotora1 = new Locomotora (peso = 1000, pesoMaximo= 12000, velocidadMaxima = 80)
+	var locomotora2 = new Locomotora (peso = 1000, pesoMaximo= 14000, velocidadMaxima = 90) 
+	var locomotoraPro = new Locomotora (peso = 300, pesoMaximo= 60000, velocidadMaxima = 280) 
+	var formacion1 = new Formacion()
+	var formacion2 = new Formacion()
+	var deposito1 = new Deposito()
+	
+	
+	fixture {
+		formacion1.agregarVagon(vagon1)
+		formacion1.agregarVagon(vagon2)
+		formacion1.agregarVagon(vagon3)
+		formacion1.agregarLocomotora(locomotora1)
+		formacion1.agregarLocomotora(locomotora2)
+		formacion2.agregarVagon(vagon1)
+		formacion2.agregarVagon(vagon2)
+		formacion2.agregarLocomotora(locomotora1)
+		deposito1.agregarLocomotora(locomotora2)
+		deposito1.agregarLocomotora(locomotoraPro)
+		deposito1.agregarFormacion(formacion1)
+		deposito1.agregarFormacion(formacion2)
+	}
+	test "vagones de pasajeros" {
+		assert.equals(80, vagon1.cantidadDePasajerosQueTransporta())
+		assert.equals(100, vagon2.cantidadDePasajerosQueTransporta())
+	}
+	test "arrastre util de locomotora" {
+		assert.equals(11000, locomotora1.arrastreUtil())
+	}
+	test "cuantos vagones livianos tiene"{
+		assert.equals(0, formacion1.cuantosVagonesLivianosTiene())
+	}
+	test "velocidad maxima" {
+		assert.equals(80, formacion1.velocidadMaxima())
+	}
+	test "es eficiente" {
+		assert.that(formacion1.esEficiente())
+	}
+	test "puede moverse" {
+		assert.notThat(formacion1.puedeMoverse())
+	}
+	test "cuantos kg de empuje le faltan" {
+		assert.equals(560, formacion1.cuantosKilosDeEmpujeLeFaltan() )
+	}
+	test "vagones mas pesados" {
+		assert.equals(#{vagon3, vagon2}, deposito1.vagonesMasPesados())
+	}
+	test "necesita conductor experimentado" {
+		assert.that(deposito1.necesitaConductorExperimentado())
+	}
+	test "agregar una locomotora" {
+	//No se muy bien como hacer este test, no me funciona
+		deposito1.agregarLocomotora()
+		assert.equals([locomotora1, locomotora2, locomotoraPro], formacion1.locomotoras())
+	}
+}
