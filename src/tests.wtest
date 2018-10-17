@@ -3,8 +3,8 @@ import depositos.*
 import trenes.*
 
 describe "tests" {
-	var vagon1 = new VagonDePasajeros(ancho = 2, largo = 10)
-	var vagon2 = new VagonDePasajeros(ancho = 3, largo = 10)
+	var vagon1 = new VagonDePasajeros(ancho = 2, largo = 10, cantidadDeBanios = 3)
+	var vagon2 = new VagonDePasajeros(ancho = 3, largo = 10, cantidadDeBanios = 2)
 	var vagon3 = new VagonDeCarga (cargaMaxima = 10000)
 	var locomotora1 = new Locomotora (peso = 1000, pesoMaximo= 12000, velocidadMaxima = 80)
 	var locomotora2 = new Locomotora (peso = 1000, pesoMaximo= 14000, velocidadMaxima = 90) 
@@ -58,7 +58,8 @@ describe "tests" {
 	}
 	test "agregar una locomotora" {
 	//No se muy bien como hacer este test, no me funciona
-		deposito1.agregarLocomotora()
+	//Puede que este mal el metodo :(
+		deposito1.agregarLocomotoraAFormacion()
 		assert.equals([locomotora1, locomotora2, locomotoraPro], formacion1.locomotoras())
 	}
 }

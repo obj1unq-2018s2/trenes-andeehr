@@ -18,10 +18,10 @@ class Deposito {
 	
 	method agregarLocomotoraAFormacion() {
 		if (self.hayFormacionQueNoPuedaMoverse()) {
-			self.agregarLocomotora()
+			self.agregarNuevaLocomotora()
 		}
 	}
-	method agregarLocomotora() {
+	method agregarNuevaLocomotora() {
 		var formacion = formaciones.find{formacion => !formacion.puedeMoverse()}
 		if (self.hayAlgunaLocomotoraPara(formacion)) {
 			formacion.agregarLocomotora(self.unaLocomotoraQueCumplaLaCondicionPara(formacion))
