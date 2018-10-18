@@ -12,7 +12,9 @@ describe "tests" {
 	var formacion1 = new Formacion()
 	var formacion2 = new Formacion()
 	var deposito1 = new Deposito()
-	
+	var formacion3 = new FormacionDeCortaDistancia()
+	var formacion4 = new FormacionDeLargaDistancia()
+	var formacion5 = new FormacionDeAltaVelocidad()
 	
 	fixture {
 		formacion1.agregarVagon(vagon1)
@@ -23,10 +25,16 @@ describe "tests" {
 		formacion2.agregarVagon(vagon1)
 		formacion2.agregarVagon(vagon2)
 		formacion2.agregarLocomotora(locomotora1)
-		deposito1.agregarLocomotora(locomotora2)
 		deposito1.agregarLocomotora(locomotoraPro)
 		deposito1.agregarFormacion(formacion1)
 		deposito1.agregarFormacion(formacion2)
+		formacion3.agregarVagon(vagon1)
+		formacion3.agregarVagon(vagon2)
+		formacion3.agregarLocomotora(locomotoraPro)
+		formacion4.agregarVagon(vagon3)
+		formacion4.agregarLocomotora(locomotoraPro)
+		formacion5.agregarVagon(vagon1)
+		formacion5.agregarLocomotora(locomotoraPro)
 	}
 	test "vagones de pasajeros" {
 		assert.equals(80, vagon1.cantidadDePasajerosQueTransporta())
@@ -56,10 +64,16 @@ describe "tests" {
 	test "necesita conductor experimentado" {
 		assert.that(deposito1.necesitaConductorExperimentado())
 	}
-	test "agregar una locomotora" {
-	//No se muy bien como hacer este test, no me funciona
-	//Puede que este mal el metodo :(
+	test "agregar una locomotora desde deposito" {
 		deposito1.agregarLocomotoraAFormacion()
 		assert.equals([locomotora1, locomotora2, locomotoraPro], formacion1.locomotoras())
 	}
+
+// TEST ETAPA 2
+
+	test "formaciones estan bien armadas" {
+		assert.notThat(formacion3.estaBienArmada()) // Corta distancia
+		assert.that(formacion4.estaBienArmada())	// Larga distancia
+		assert.notThat(formacion5.estaBienArmada()) // Larga distancia, alta velocidad
+	}	
 }
